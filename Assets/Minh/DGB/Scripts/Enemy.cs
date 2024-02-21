@@ -38,9 +38,12 @@ namespace minh.DBG
         void Update()
         {
             if (IsComponentsNull()) return;
-            
-            if(Vector2.Distance(m_player.transform.position,
-                transform.position) <= atkDistance)
+
+            float DistanceToPlayer = Vector2.Distance(m_player.transform.position,
+                transform.position);
+
+
+            if (DistanceToPlayer <= atkDistance)
             {
                 m_anim.SetBool(Const.ATTACK_ANIM, true);
                 m_rb.velocity = Vector2.zero; //co toa do la (0,0)
@@ -49,6 +52,16 @@ namespace minh.DBG
             {
                 m_rb.velocity = new Vector2(-speed, m_rb.velocity.y);
             }
+        }
+
+        public void Die()
+        {
+            
+            if (IsComponentsNull()) return;
+
+            m_anim.SetTrigger(Const.DEAD_ANIM);
+            m_rb.velocity = Vector2.zero;
+            gameObject.layer = LayerMask.NameToLayer(Const.DEAD_ANIM);
         }
     }
 }
